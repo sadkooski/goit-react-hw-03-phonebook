@@ -21,6 +21,17 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    const storedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (storedContacts) {
+      this.setState({ contacts: storedContacts });
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   handleSubmit = evt => {
     evt.preventDefault();
 
@@ -48,15 +59,6 @@ class App extends Component {
 
     form.reset();
   };
-
-  componentDidMount() {
-    const storedContacts = localStorage.getItem('contacts');
-    this.setState({ contacts: JSON.parse(storedContacts) });
-  }
-
-  componentDidUpdate() {
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  }
 
   handleBrowser = evt => {
     const filterValue = evt.target.value.toLowerCase();
